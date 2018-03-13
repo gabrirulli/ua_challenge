@@ -11,6 +11,8 @@ class HotelsController < ApplicationController
     end
 
     # @hotels = Hotel.all
-    render json: @hotels, each_serializer: HotelSerializer, status: :ok
+    render json: @hotels, each_serializer: HotelSerializer, scope: {
+      'locale': request.headers["HTTP_ACCEPT_LANGUAGE"]
+    }
   end
 end
