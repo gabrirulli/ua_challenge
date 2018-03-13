@@ -4,7 +4,7 @@ class CreateHotels < ActiveRecord::Migration[5.1]
       t.string :name
       t.string :country_code
       t.text :description
-      t.decimal :average_price
+      t.float :average_price
       t.integer :views_count
 
       t.timestamps
@@ -12,7 +12,7 @@ class CreateHotels < ActiveRecord::Migration[5.1]
 
     reversible do |dir|
       dir.up do
-        Hotel.create_translation_table! description: :text
+        Hotel.create_translation_table! description: :text, average_price: :float
       end
 
       dir.down do

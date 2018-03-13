@@ -4,12 +4,11 @@ RSpec.describe HotelsController, type: :controller do
   describe 'GET index'do
     before(:each) do
       @user = User.create(first_name: "", last_name: "", email: "email@example.com", password: "password")
+      @hotel = Hotel.create(name: "", country_code: "", description: "", average_price: 0, views_count: 0)
     end
 
     context "if user is not logged" do
       it 'assigns empty array to @hotels' do
-        Hotel.create(name: "", country_code: "", description: "", average_price: "", views_count: "")
-
         get :index
 
         expect(assigns(:hotels)).to eq []
@@ -18,7 +17,7 @@ RSpec.describe HotelsController, type: :controller do
 
     context "if user is logged and has not managed hotels" do
       it "assigns empty array to @hotels" do
-        sign_in_as(@user)
+        sign_in_as(@user) # this is a clearance gem helper
 
         get :index
 
@@ -28,14 +27,13 @@ RSpec.describe HotelsController, type: :controller do
 
     context "if user is logged and has managed hotels" do
       it "assigns user.managed_hotels to @hotels" do
-        sign_in_as(@user) # this is a clearance gem helper
+        sign_in_as(@user)
 
-        hotel = Hotel.create(name: "", country_code: "", description: "", average_price: 0, views_count: 0)
-        @user.managed_hotels << hotel
+        @user.managed_hotels << @hotel
 
         get :index
 
-        expect(assigns(:hotels)).to eq [hotel]
+        expect(assigns(:hotels)).to eq [@hotel]
       end
     end
 
@@ -52,8 +50,8 @@ RSpec.describe HotelsController, type: :controller do
     #       description_it: "Italiano",
     #       description_en: "Inglese",
     #       description_es: "Spagnolo",
-    #       average_price: "",
-    #       views_count: ""
+    #       average_price: 0,
+    #       views_count: 0
     #     )
     #
     #     get :index

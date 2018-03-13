@@ -11,4 +11,7 @@ class HotelSerializer < ActiveModel::Serializer
       object.description
     end
   end
+
+  def average_price
+  end
 end

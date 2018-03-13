@@ -10,10 +10,18 @@
 #
 # It's strongly recommended that you check this file into your version control system.
 
-ActiveRecord::Schema.define(version: 20180311191306) do
+ActiveRecord::Schema.define(version: 20180313140211) do
 
   # These are extensions that must be enabled in order to support this database
   enable_extension "plpgsql"
+
+  create_table "currency_exchanges", force: :cascade do |t|
+    t.string "country_code"
+    t.string "currency"
+    t.float "rate"
+    t.datetime "created_at", null: false
+    t.datetime "updated_at", null: false
+  end
 
   create_table "hotel_managers", force: :cascade do |t|
     t.bigint "hotel_id"
@@ -30,6 +38,7 @@ ActiveRecord::Schema.define(version: 20180311191306) do
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
     t.text "description"
+    t.float "average_price"
     t.index ["hotel_id"], name: "index_hotel_translations_on_hotel_id"
     t.index ["locale"], name: "index_hotel_translations_on_locale"
   end
@@ -47,7 +56,7 @@ ActiveRecord::Schema.define(version: 20180311191306) do
     t.string "name"
     t.string "country_code"
     t.text "description"
-    t.decimal "average_price"
+    t.float "average_price"
     t.integer "views_count"
     t.datetime "created_at", null: false
     t.datetime "updated_at", null: false
