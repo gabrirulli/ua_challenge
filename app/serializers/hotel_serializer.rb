@@ -6,12 +6,21 @@ class HotelSerializer < ActiveModel::Serializer
     when "en"
       object.description_en
     when "es-US"
-      object.description_es
+      object.description_es_us
     else
       object.description
     end
   end
 
   def average_price
+    c = CurrencyExchange.find_by(country_code: scope[:locale])
+    case scope[:locale]
+    when "en"
+      "%.2f #{c.currency}" % object.average_price_en
+    when "es-US"
+      "%.2f #{c.currency}" % object.average_price_es_us
+    else
+      "%.2f €" % object.average_price
+    end
   end
 end

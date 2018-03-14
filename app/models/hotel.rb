@@ -1,4 +1,5 @@
 class Hotel < ApplicationRecord
+  # Definizione campi da tradurre con la gemma globalize-accessor
   translates :description, :average_price
   globalize_accessors :locales => [:it, :en, :es_us], attributes: [:description, :average_price]
 
@@ -8,7 +9,7 @@ class Hotel < ApplicationRecord
   has_many :hotel_managers
   has_many :managers, through: :hotel_managers, source: :user
 
-  before_create :set_average_price
+  before_create :set_average_price, :calculate_average_price
 
   private
 
@@ -18,14 +19,12 @@ class Hotel < ApplicationRecord
     ['en', 'es_us'].each do |lng|
       self.send("average_price_#{lng}=", average_price_it)
     end
-    calculate_average_price
   end
 
   # Calcola il prezzo in base alla lingua, alla valuta ed al suo tasso di scambio
   def calculate_average_price
     CurrencyExchange.all.each do |ce|
-      p ce.country_code
-      self.send("average_price_#{ce.country_code}=", average_price_it * ce.rate)
+      self.send("average_price_#{ce.country_code}=", (average_price_it * ce.rate))
     end
   end
 end

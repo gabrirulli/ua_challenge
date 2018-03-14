@@ -36,29 +36,5 @@ RSpec.describe HotelsController, type: :controller do
         expect(assigns(:hotels)).to eq [@hotel]
       end
     end
-
-    # context "if user is logged and the language is set in the request header" do
-    #   it "assigns empty array to @hotels" do
-    #     locales = ["it", "en", "es"]
-    #     locale = locales.sample
-    #     # locale = "en"
-    #     sign_in_as(@user)
-    #
-    #     hotel = Hotel.create(
-    #       name: "",
-    #       country_code: "",
-    #       description_it: "Italiano",
-    #       description_en: "Inglese",
-    #       description_es: "Spagnolo",
-    #       average_price: 0,
-    #       views_count: 0
-    #     )
-    #
-    #     get :index
-    #
-    #     expect(hotel.description).to eq hotel.send("description_#{locale}")
-    #   end
-    # end
-
   end
 end
