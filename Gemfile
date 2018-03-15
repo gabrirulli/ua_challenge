@@ -29,6 +29,8 @@ gem 'puma', '~> 3.7'
 # Authentication
 gem 'clearance'
 
+gem 'sidekiq'
+
 # API serialization
 gem 'active_model_serializers', '~> 0.10.0'
 
