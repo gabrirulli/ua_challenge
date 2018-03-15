@@ -5,7 +5,7 @@ class HotelSerializer < ActiveModel::Serializer
     case scope[:locale]
     when "en"
       object.description_en
-    when "es-US"
+    when "es_us"
       object.description_es_us
     else
       object.description
@@ -17,7 +17,7 @@ class HotelSerializer < ActiveModel::Serializer
     case scope[:locale]
     when "en"
       "%.2f #{c.currency}" % object.average_price_en
-    when "es-US"
+    when "es_us"
       "%.2f #{c.currency}" % object.average_price_es_us
     else
       "%.2f €" % object.average_price

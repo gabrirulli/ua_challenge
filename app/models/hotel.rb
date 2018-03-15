@@ -16,12 +16,13 @@ class Hotel < ApplicationRecord
   # Salva in database un prezzo unico per tutte le valute, altrimenti il valore su cui calcolare il cambio sarebbe sbagliato.
   # Quando si crea un Hotel basta dare un valore ad average_price senza specificare la lingua
   def set_average_price
-    ['en', 'es_us'].each do |lng|
+    ["en", "es_us"].each do |lng|
       self.send("average_price_#{lng}=", average_price_it)
     end
   end
 
-  # Calcola il prezzo in base alla lingua, alla valuta ed al suo tasso di scambio
+  # Calcola il prezzo in base alla lingua ed al suo tasso di scambio.
+  # Il prezzo sarà l'equivalente di n€ nella valuta selezionata
   def calculate_average_price
     CurrencyExchange.all.each do |ce|
       self.send("average_price_#{ce.country_code}=", (average_price_it * ce.rate))

@@ -7,10 +7,9 @@ class HotelsController < ApplicationController
     end
 
     if @hotels != []
-      ViewsCountIncrementJob.perform_now(@hotels.map(&:id))
+      ViewsCountIncrementJob.perform_later(@hotels.map(&:id))
     end
 
-    # @hotels = Hotel.all
     render json: @hotels, each_serializer: HotelSerializer, scope: {
       'locale': request.headers["HTTP_ACCEPT_LANGUAGE"]
     }
